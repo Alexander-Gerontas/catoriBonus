@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <!-- bonus table -->
+    <changeSet id="player-bonus-table-creation" author="author" failOnError="true">
+        <preConditions>
+            <not>
+                <tableExists tableName="player_bonus"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="player_bonus">
+            <column name="player_id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="player_pk"/>
+            </column>
+            <column name="total_bonus" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- processed bonus events table -->
+    <changeSet id="processed-bonus-events-table-creation" author="author" failOnError="true">
+        <preConditions>
+            <not>
+                <tableExists tableName="processed_bonus_events"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="processed_bonus_events">
+            <column name="event_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="event_timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
